@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cosman Universe</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             font-family: 'Poppins', Arial, sans-serif;
@@ -13,121 +14,194 @@
             background-size: cover;
             color: #f4f4f4;
             overflow-x: hidden;
+            height: 100vh;
         }
+
         header {
             background: rgba(0, 0, 0, 0.7);
-            padding: 2rem 1rem;
+            padding: 2rem;
             text-align: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 999;
         }
+
         header h1 {
             margin: 0;
-            font-size: 3rem;
+            font-size: 3.5rem;
             color: #ffcc00;
-            animation: fadeIn 2s;
+            font-weight: 700;
+            animation: fadeIn 1s ease-out;
         }
+
         main {
             max-width: 900px;
-            margin: 3rem auto;
+            margin: 5rem auto;
             padding: 2rem;
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
             color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
         }
+
         h2 {
             color: #ffcc00;
             margin-bottom: 1rem;
+            font-size: 2rem;
+            font-weight: 600;
         }
+
         section {
             margin-bottom: 2rem;
         }
+
         ul {
             list-style-type: none;
             padding: 0;
         }
+
         ul li {
             background: rgba(0, 0, 0, 0.6);
-            margin: 0.5rem 0;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
+            margin: 0.8rem 0;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
             color: #ffcc00;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, background 0.3s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
             cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+            font-size: 1.1rem;
+            font-weight: 500;
         }
+
         ul li:hover {
             transform: translateY(-5px);
-            background: rgba(255, 204, 0, 0.2);
+            background: rgba(255, 204, 0, 0.3);
         }
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background: #333;
-            padding: 2rem;
-            border-radius: 10px;
+
+        .image-gallery {
             text-align: center;
-            color: #f4f4f4;
-            max-width: 600px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            margin-top: 3rem;
         }
-        .modal-content img {
-            width: 100%;
-            border-radius: 8px;
-            margin-top: 1rem;
+
+        .image-gallery img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
         }
-        .close {
-            color: #ffcc00;
-            font-size: 1.5rem;
-            cursor: pointer;
-            margin-top: 1rem;
+
+        .image-gallery img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6);
         }
+
         footer {
             text-align: center;
             padding: 1.5rem 0;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.6);
             color: #ffcc00;
         }
+
         a {
             color: #ffcc00;
             text-decoration: none;
             font-weight: bold;
             transition: color 0.3s;
         }
+
         a:hover {
             color: #ffaa33;
         }
-        .image-gallery {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            overflow: auto;
+            padding-top: 60px;
             justify-content: center;
-            margin-top: 2rem;
+            align-items: center;
         }
-        .image-gallery img {
-            width: 30%;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s;
+
+        .modal-content {
+            background-color: #222;
+            color: #ffcc00;
+            padding: 20px;
+            border-radius: 15px;
+            width: 50%;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.6);
+            animation: modalFadeIn 0.5s ease;
         }
-        .image-gallery img:hover {
-            transform: scale(1.05);
+
+        .modal-header {
+            font-size: 1.5rem;
+            font-weight: 700;
         }
+
+        .modal-body {
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+
+        .close {
+            color: #ffcc00;
+            font-size: 2rem;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #ffaa33;
+        }
+
+        .social-links {
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            font-size: 2rem;
+            margin: 0 15px;
+            color: #ffcc00;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: scale(1.1);
+            color: #ffaa33;
+        }
+
+        /* Keyframes for animation */
         @keyframes fadeIn {
             from {
                 opacity: 0;
             }
             to {
                 opacity: 1;
+            }
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
     </style>
@@ -142,34 +216,38 @@
             <p>Hello! My name is Mohammed Haimoud, also known as Cosman. My passion for astronomy and science has driven me to explore the universe and share my knowledge with others. I lead the Quasar Astronomy Club and have been actively participating in events, workshops, and science festivals to inspire others.</p>
             <p>Through my work, I aim to simplify complex astronomical concepts and encourage people to look up and marvel at the stars.</p>
         </section>
+
         <section>
             <h2>My Interests</h2>
             <ul>
-                <li onclick="showModal('Astronomy', 'Astronomy is the scientific study of celestial objects, space, and the universe as a whole. It seeks to understand the laws of physics that govern the cosmos.', 'https://images-assets.nasa.gov/image/PIA12096/PIA12096~orig.jpg')">Astronomy</li>
-                <li onclick="showModal('Astrophotography', 'Astrophotography is the art of photographing celestial objects like stars, planets, and galaxies. It combines photography and astronomy to capture the beauty of the night sky.', 'https://images-assets.nasa.gov/image/PIA04254/PIA04254~orig.jpg')">Astrophotography</li>
-                <li onclick="showModal('Science Outreach', 'Science outreach involves engaging with the public to share scientific knowledge, inspire curiosity, and promote understanding of science and technology.', 'https://images-assets.nasa.gov/image/PIA18152/PIA18152~orig.jpg')">Science Outreach</li>
-                <li onclick="showModal('Technology Integration in Education', 'Integrating technology into education involves using digital tools and resources to enhance learning and teaching processes.', 'https://images-assets.nasa.gov/image/PIA09113/PIA09113~orig.jpg')">Technology Integration in Education</li>
+                <li onclick="showModal('Astronomy', 'Astronomy is the scientific study of celestial objects, space, and the universe as a whole. It seeks to understand the laws of physics that govern the cosmos.')">Astronomy</li>
+                <li onclick="showModal('Astrophotography', 'Astrophotography is the art of photographing celestial objects like stars, planets, and galaxies. It combines photography and astronomy to capture the beauty of the night sky.')">Astrophotography</li>
+                <li onclick="showModal('Science Outreach', 'Science outreach involves engaging with the public to share scientific knowledge, inspire curiosity, and promote understanding of science and technology.')">Science Outreach</li>
+                <li onclick="showModal('Technology Integration in Education', 'Integrating technology into education involves using digital tools and resources to enhance learning and teaching processes.')">Technology Integration in Education</li>
             </ul>
         </section>
+
         <section class="image-gallery">
-            <h2>Explore the Universe</h2>
-            <img src="https://images-assets.nasa.gov/image/PIA12096/PIA12096~orig.jpg" alt="Andromeda Galaxy">
-            <img src="https://images-assets.nasa.gov/image/PIA04254/PIA04254~orig.jpg" alt="Hubble Space Telescope View">
-            <img src="https://images-assets.nasa.gov/image/PIA18152/PIA18152~orig.jpg" alt="Deep Space Nebula">
+            <h2>NASA Astronomy Picture of the Day (APOD)</h2>
+            <div id="apod-image-container">
+                <!-- The image will be inserted here dynamically -->
+                <p>Loading the image...</p>
+            </div>
+            <p id="apod-description"></p>
         </section>
+
         <section>
             <h2>Contact Me</h2>
             <p>Want to connect? Reach out to me on my social media platforms or drop me an email at <a href="mailto:haimoud.mohamed.astro@gmail.com">haimoud.mohamed.astro@gmail.com</a>.</p>
             <div class="social-links">
-                <a href="https://www.instagram.com/cosman_astro/" target="_blank">Instagram</a>
-                <a href="https://www.tiktok.com/@cosmanastro" target="_blank">TikTok</a>
-                <a href="https://mohammedhaimoud.blogspot.com/" target="_blank">Blogger</a>
-                <a href="https://www.youtube.com/@COSMAN-HAIMOUD" target="_blank">YouTube 1</a>
-                <a href="https://www.youtube.com/@MohammedHaimoud" target="_blank">YouTube 2</a>
-                <a href="https://www.linkedin.com/in/mohammed-haimoud/" target="_blank">LinkedIn</a>
-                <a href="https://www.facebook.com/quasarastronomy" target="_blank">Facebook 1</a>
-                <a href="https://www.facebook.com/MohammedHaimoudAstro" target="_blank">Facebook 2</a>
-                <a href="https://www.researchgate.net/profile/Mohammed-Haimoud" target="_blank">ResearchGate</a>
+                <a href="https://www.instagram.com/cosman_astro/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.tiktok.com/@cosmanastro" target="_blank"><i class="fab fa-tiktok"></i></a>
+                <a href="https://mohammedhaimoud.blogspot.com/" target="_blank"><i class="fab fa-blogger"></i></a>
+                <a href="https://www.youtube.com/@COSMAN-HAIMOUD" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.linkedin.com/in/mohammed-haimoud/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.facebook.com/quasarastronomy" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.facebook.com/MohammedHaimoudAstro" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.researchgate.net/profile/Mohammed-Haimoud" target="_blank"><i class="fab fa-researchgate"></i></a>
             </div>
         </section>
     </main>
@@ -177,6 +255,78 @@
         <p>&copy; 2025 Mohammed Haimoud. All rights reserved.</p>
     </footer>
 
-    <div id="modal" class="modal">
+    <div id="interestModal" class="modal">
         <div class="modal-content">
-            <
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="modal-header">
+                <h3 id="modal-title"></h3>
+            </div>
+            <div class="modal-body">
+                <p id="modal-description"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Your NASA API key (sign up at https://api.nasa.gov/ to get one)
+        const apiKey = 'DEMO_KEY'; // Replace with your API key from NASA
+
+        // Function to fetch the APOD of the day
+        async function fetchAPOD() {
+            const url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`;
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+
+                // Get the container for the image
+                const container = document.getElementById('apod-image-container');
+                const description = document.getElementById('apod-description');
+
+                // Clear any previous content
+                container.innerHTML = '';
+                description.innerHTML = '';
+
+                // Set up the image and description
+                const imageElement = document.createElement('img');
+                imageElement.src = data.url;
+                imageElement.alt = data.title;
+                imageElement.title = data.title;
+
+                // Append image to the container
+                container.appendChild(imageElement);
+
+                // Set the description
+                description.innerHTML = data.explanation;
+
+            } catch (error) {
+                console.error('Error fetching NASA APOD:', error);
+                const container = document.getElementById('apod-image-container');
+                container.innerHTML = 'Could not load the image of the day.';
+            }
+        }
+
+        // Fetch APOD when the page loads
+        window.onload = fetchAPOD;
+
+        // Modal function for interests
+        function showModal(title, description) {
+            document.getElementById('interestModal').style.display = 'flex';
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-description').innerText = description;
+        }
+
+        // Close the modal
+        function closeModal() {
+            document.getElementById('interestModal').style.display = 'none';
+        }
+
+        // Close the modal if clicked on the background
+        window.onclick = function(event) {
+            const modal = document.getElementById('interestModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
